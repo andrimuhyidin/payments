@@ -46,6 +46,30 @@ def import_workspace():
 	number_cards = workspace_data.pop("number_cards", [])
 	custom_blocks = workspace_data.pop("custom_blocks", [])
 	
+	# Auto-calculate link_count for Card Breaks
+	# Count links between Card Breaks
+	current_card_break_index = None
+	for idx, link in enumerate(links):
+		if link.get("type") == "Card Break":
+			# Calculate link_count for previous card break
+			if current_card_break_index is not None:
+				link_count = idx - current_card_break_index - 1
+				links[current_card_break_index]["link_count"] = link_count
+			current_card_break_index = idx
+		elif idx == len(links) - 1 and current_card_break_index is not None:
+			# Last item, calculate for last card break
+			link_count = idx - current_card_break_index
+			links[current_card_break_index]["link_count"] = link_count
+	
+	# Validate workspace structure
+	if not workspace_data.get("label"):
+		print("ERROR: Workspace label is required")
+		return None
+	
+	if not workspace_data.get("module"):
+		print("ERROR: Workspace module is required")
+		return None
+	
 	if workspace_exists:
 		# Update existing workspace
 		workspace = frappe.get_doc("Workspace", workspace_name)
@@ -99,6 +123,12 @@ def import_workspace():
 	print(f"  Label: {workspace.label}")
 	print(f"  Module: {workspace.module}")
 	print(f"  Links: {len(workspace.links)}")
+	print(f"  Shortcuts: {len(workspace.shortcuts)}")
+	print(f"  Number Cards: {len(workspace.number_cards)}")
+	
+	# Count Card Breaks
+	card_breaks = [link for link in workspace.links if link.get("type") == "Card Break"]
+	print(f"  Card Breaks: {len(card_breaks)}")
 	
 	return workspace
 

@@ -40,6 +40,30 @@ def execute():
 	number_cards = workspace_data.pop("number_cards", [])
 	custom_blocks = workspace_data.pop("custom_blocks", [])
 	
+	# Auto-calculate link_count for Card Breaks
+	# Count links between Card Breaks
+	current_card_break_index = None
+	for idx, link in enumerate(links):
+		if link.get("type") == "Card Break":
+			# Calculate link_count for previous card break
+			if current_card_break_index is not None:
+				link_count = idx - current_card_break_index - 1
+				links[current_card_break_index]["link_count"] = link_count
+			current_card_break_index = idx
+		elif idx == len(links) - 1 and current_card_break_index is not None:
+			# Last item, calculate for last card break
+			link_count = idx - current_card_break_index
+			links[current_card_break_index]["link_count"] = link_count
+	
+	# Validate workspace structure
+	if not workspace_data.get("label"):
+		frappe.logger().error("Workspace label is required")
+		return
+	
+	if not workspace_data.get("module"):
+		frappe.logger().error("Workspace module is required")
+		return
+	
 	# Check if workspace already exists
 	if frappe.db.exists("Workspace", workspace_name):
 		# Update existing workspace
@@ -78,7 +102,10 @@ def execute():
 			workspace.append("custom_blocks", item)
 		
 		workspace.save(ignore_permissions=True)
-		frappe.logger().info(f"Successfully updated workspace: {workspace_name}")
+		frappe.logger().info(
+			f"Successfully updated workspace: {workspace_name} "
+			f"(Links: {len(links)}, Shortcuts: {len(shortcuts)}, Number Cards: {len(number_cards)})"
+		)
 	else:
 		# Create new workspace
 		workspace = frappe.get_doc(workspace_data)
@@ -103,6 +130,9 @@ def execute():
 			workspace.append("custom_blocks", item)
 		
 		workspace.insert(ignore_permissions=True)
-		frappe.logger().info(f"Successfully imported workspace: {workspace_name}")
+		frappe.logger().info(
+			f"Successfully imported workspace: {workspace_name} "
+			f"(Links: {len(links)}, Shortcuts: {len(shortcuts)}, Number Cards: {len(number_cards)})"
+		)
 	
 	frappe.db.commit()

@@ -1,6 +1,7 @@
 {
+ "app": "payments",
  "charts": [],
- "content": "[]",
+ "content": "[{\"id\":\"header1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Payment Gateway Management</b></span>\",\"col\":12}},{\"id\":\"spacer1\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"card1\",\"type\":\"card\",\"data\":{\"card_name\":\"International Gateways\",\"col\":4}},{\"id\":\"card2\",\"type\":\"card\",\"data\":{\"card_name\":\"Asian Gateways\",\"col\":4}},{\"id\":\"card3\",\"type\":\"card\",\"data\":{\"card_name\":\"African Gateways\",\"col\":4}}]",
  "creation": "2025-01-27 00:00:00.000000",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,89 +14,172 @@
  "label": "Payments",
  "links": [
   {
-   "type": "Link",
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Payment Gateway",
+   "link_count": 0,
+   "link_to": "Payment Gateway",
    "link_type": "DocType",
-   "link_to": "Payment Gateway"
+   "onboard": 1,
+   "type": "Link"
   },
   {
-   "type": "Card Break",
-   "label": "Payment Gateway Settings",
-   "icon": "settings",
-   "description": "Configure and manage payment gateway integrations"
+   "description": "International payment gateway integrations",
+   "hidden": 0,
+   "icon": "globe",
+   "label": "International Gateways",
+   "link_count": 4,
+   "type": "Card Break"
   },
   {
-   "type": "Link",
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Stripe Settings",
+   "link_count": 0,
+   "link_to": "Stripe Settings",
    "link_type": "DocType",
-   "link_to": "Stripe Settings"
+   "onboard": 0,
+   "type": "Link"
   },
   {
-   "type": "Link",
-   "label": "Razorpay Settings",
-   "link_type": "DocType",
-   "link_to": "Razorpay Settings"
-  },
-  {
-   "type": "Link",
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "PayPal Settings",
+   "link_count": 0,
+   "link_to": "PayPal Settings",
    "link_type": "DocType",
-   "link_to": "PayPal Settings"
+   "onboard": 0,
+   "type": "Link"
   },
   {
-   "type": "Link",
-   "label": "Paytm Settings",
-   "link_type": "DocType",
-   "link_to": "Paytm Settings"
-  },
-  {
-   "type": "Link",
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Braintree Settings",
+   "link_count": 0,
+   "link_to": "Braintree Settings",
    "link_type": "DocType",
-   "link_to": "Braintree Settings"
+   "onboard": 0,
+   "type": "Link"
   },
   {
-   "type": "Link",
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "GoCardless Settings",
+   "link_count": 0,
+   "link_to": "GoCardless Settings",
    "link_type": "DocType",
-   "link_to": "GoCardless Settings"
+   "onboard": 0,
+   "type": "Link"
   },
   {
-   "type": "Link",
+   "description": "Payment gateways for Asian markets",
+   "hidden": 0,
+   "icon": "flag",
+   "label": "Asian Gateways",
+   "link_count": 5,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Razorpay Settings",
+   "link_count": 0,
+   "link_to": "Razorpay Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Paytm Settings",
+   "link_count": 0,
+   "link_to": "Paytm Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Midtrans Settings",
+   "link_count": 0,
+   "link_to": "Midtrans Settings",
    "link_type": "DocType",
-   "link_to": "Midtrans Settings"
+   "onboard": 0,
+   "type": "Link"
   },
   {
-   "type": "Link",
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Xendit Settings",
+   "link_count": 0,
+   "link_to": "Xendit Settings",
    "link_type": "DocType",
-   "link_to": "Xendit Settings"
+   "onboard": 0,
+   "type": "Link"
   },
   {
-   "type": "Link",
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Paymob Settings",
+   "link_count": 0,
+   "link_to": "Paymob Settings",
    "link_type": "DocType",
-   "link_to": "Paymob Settings"
+   "onboard": 0,
+   "type": "Link"
   },
   {
-   "type": "Link",
+   "description": "Payment gateways for African markets",
+   "hidden": 0,
+   "icon": "flag",
+   "label": "African Gateways",
+   "link_count": 1,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Mpesa Settings",
+   "link_count": 0,
+   "link_to": "Mpesa Settings",
    "link_type": "DocType",
-   "link_to": "Mpesa Settings"
+   "onboard": 0,
+   "type": "Link"
   }
  ],
  "modified": "2025-01-27 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Payments",
  "name": "Payments",
- "number_cards": [],
+ "number_cards": [
+  {
+   "document_type": "Payment Gateway",
+   "label": "Total Gateways",
+   "type": "Document Type"
+  }
+ ],
  "owner": "Administrator",
  "parent_page": "",
- "public": 0,
+ "public": 1,
  "quick_lists": [],
  "roles": [],
  "sequence_id": 10.0,
- "shortcuts": [],
+ "shortcuts": [
+  {
+   "color": "Green",
+   "doc_view": "New",
+   "label": "New Payment Gateway",
+   "link_to": "Payment Gateway",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Payment Gateway Settings",
+   "link_to": "Payment Gateway",
+   "type": "DocType"
+  }
+ ],
  "title": "Payments"
 }
