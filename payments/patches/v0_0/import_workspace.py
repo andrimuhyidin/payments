@@ -27,16 +27,40 @@ def execute():
 	with open(workspace_path, "r") as f:
 		workspace_data = json.load(f)
 	
-	# Convert list fields to JSON strings (Frappe expects JSON strings, not lists)
-	# Fields that need to be converted: content, charts, links, shortcuts, quick_lists, number_cards, custom_blocks
-	list_fields = ["content", "charts", "links", "shortcuts", "quick_lists", "number_cards", "custom_blocks"]
+	# Extract child table data (content is a child table, not JSON field)
+	content_items = workspace_data.pop("content", [])
+	charts = workspace_data.pop("charts", [])
+	links = workspace_data.pop("links", [])
+	shortcuts = workspace_data.pop("shortcuts", [])
+	quick_lists = workspace_data.pop("quick_lists", [])
+	number_cards = workspace_data.pop("number_cards", [])
+	custom_blocks = workspace_data.pop("custom_blocks", [])
 	
-	for field in list_fields:
-		if field in workspace_data and isinstance(workspace_data[field], list):
-			workspace_data[field] = json.dumps(workspace_data[field])
-	
-	# Create workspace document
+	# Create workspace document (without child tables first)
 	workspace = frappe.get_doc(workspace_data)
+	
+	# Add child table items
+	for item in content_items:
+		workspace.append("content", item)
+	
+	for item in charts:
+		workspace.append("charts", item)
+	
+	for item in links:
+		workspace.append("links", item)
+	
+	for item in shortcuts:
+		workspace.append("shortcuts", item)
+	
+	for item in quick_lists:
+		workspace.append("quick_lists", item)
+	
+	for item in number_cards:
+		workspace.append("number_cards", item)
+	
+	for item in custom_blocks:
+		workspace.append("custom_blocks", item)
+	
 	workspace.insert(ignore_permissions=True)
 	
 	frappe.db.commit()
