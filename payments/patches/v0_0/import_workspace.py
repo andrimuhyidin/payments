@@ -27,6 +27,14 @@ def execute():
 	with open(workspace_path, "r") as f:
 		workspace_data = json.load(f)
 	
+	# Convert list fields to JSON strings (Frappe expects JSON strings, not lists)
+	# Fields that need to be converted: content, charts, links, shortcuts, quick_lists, number_cards, custom_blocks
+	list_fields = ["content", "charts", "links", "shortcuts", "quick_lists", "number_cards", "custom_blocks"]
+	
+	for field in list_fields:
+		if field in workspace_data and isinstance(workspace_data[field], list):
+			workspace_data[field] = json.dumps(workspace_data[field])
+	
 	# Create workspace document
 	workspace = frappe.get_doc(workspace_data)
 	workspace.insert(ignore_permissions=True)
