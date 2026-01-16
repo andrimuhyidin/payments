@@ -1,0 +1,122 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2024-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "document_type": "System",
+ "engine": "InnoDB",
+ "field_order": [
+  "gateway_name",
+  "is_sandbox",
+  "credentials_section",
+  "server_key",
+  "client_key",
+  "column_break_cred",
+  "merchant_id",
+  "payment_config_section",
+  "payment_account",
+  "column_break_config",
+  "redirect_to"
+ ],
+ "fields": [
+  {
+   "default": "Midtrans",
+   "fieldname": "gateway_name",
+   "fieldtype": "Data",
+   "label": "Gateway Name",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "description": "Enable this for testing with Sandbox environment. Disable for Production.",
+   "fieldname": "is_sandbox",
+   "fieldtype": "Check",
+   "label": "Is Sandbox"
+  },
+  {
+   "fieldname": "credentials_section",
+   "fieldtype": "Section Break",
+   "label": "Credentials"
+  },
+  {
+   "description": "Server Key from Midtrans Dashboard (Settings > Access Keys)",
+   "fieldname": "server_key",
+   "fieldtype": "Password",
+   "label": "Server Key",
+   "reqd": 1
+  },
+  {
+   "description": "Client Key from Midtrans Dashboard (Settings > Access Keys)",
+   "fieldname": "client_key",
+   "fieldtype": "Data",
+   "label": "Client Key",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_cred",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Merchant ID from Midtrans Dashboard",
+   "fieldname": "merchant_id",
+   "fieldtype": "Data",
+   "label": "Merchant ID"
+  },
+  {
+   "fieldname": "payment_config_section",
+   "fieldtype": "Section Break",
+   "label": "Payment Configuration"
+  },
+  {
+   "description": "Bank/GL Account to receive payments",
+   "fieldname": "payment_account",
+   "fieldtype": "Link",
+   "label": "Payment Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_config",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "URL to redirect after payment completion",
+   "fieldname": "redirect_to",
+   "fieldtype": "Data",
+   "label": "Redirect To"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Payment Gateways",
+ "name": "Midtrans Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
