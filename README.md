@@ -35,9 +35,9 @@ A payments app for Frappe Framework with support for multiple payment gateways i
 
 2. **Get the Payments App**
    ```bash
-   bench get-app https://github.com/anthropics/payments.git
-   # Or from your fork
-   bench get-app https://github.com/anthropics/payments.git --branch develop
+   bench get-app https://github.com/andrimuhyidin/payments.git
+   # Or specify branch
+   bench get-app https://github.com/andrimuhyidin/payments.git --branch develop
    ```
 
 3. **Install on Your Site**
@@ -386,7 +386,7 @@ MIT License - see [license.txt](license.txt)
 
 ## Support
 
-- **Issues:** [GitHub Issues](https://github.com/anthropics/payments/issues)
+- **Issues:** [GitHub Issues](https://github.com/andrimuhyidin/payments/issues)
 - **Documentation:** [Frappe Framework Docs](https://frappeframework.com/docs)
 - **Midtrans Docs:** [Midtrans Technical Documentation](https://docs.midtrans.com)
 - **Xendit Docs:** [Xendit API Reference](https://developers.xendit.co)
