@@ -215,3 +215,39 @@ def erpnext_app_import_guard():
 		yield
 	except ImportError:
 		frappe.throw(msg, title=_("Missing ERPNext App"))
+
+
+def fix_payment_gateway_records():
+	"""
+	Fix Payment Gateway records for Single DocType payment gateways.
+
+	Single DocTypes (like Midtrans Settings, Xendit Settings) cannot be used
+	as targets for Dynamic Links. This function ensures that Payment Gateway
+	records for such gateways have gateway_settings and gateway_controller
+	set to None.
+
+	The system will automatically fallback to using "{gateway_name} Settings"
+	pattern when gateway_controller is None.
+	"""
+	# List of Single DocType payment gateways that should NOT have gateway_settings
+	single_doctype_gateways = [
+		"Midtrans",
+		"Xendit",
+		"Razorpay",
+		"PayPal",
+		"Paymob",
+		"PayTM",
+		"Braintree",
+		"M-Pesa",
+	]
+
+	for gateway_name in single_doctype_gateways:
+		if frappe.db.exists("Payment Gateway", gateway_name):
+			gateway = frappe.get_doc("Payment Gateway", gateway_name)
+			if gateway.gateway_settings or gateway.gateway_controller:
+				gateway.gateway_settings = None
+				gateway.gateway_controller = None
+				gateway.save(ignore_permissions=True)
+				click.secho(f"* Fixed Payment Gateway record for {gateway_name}")
+
+	frappe.db.commit()
