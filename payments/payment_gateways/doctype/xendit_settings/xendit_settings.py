@@ -45,20 +45,23 @@ class XenditSettings(Document):
 		gateway_name = "Xendit"
 
 		if not frappe.db.exists("Payment Gateway", gateway_name):
-			payment_gateway = frappe.get_doc({
+			# Create new record without gateway_settings
+			frappe.get_doc({
 				"doctype": "Payment Gateway",
 				"gateway": gateway_name,
-				"gateway_settings": None,  # Must be None for Single DocType
-				"gateway_controller": None,  # Must be None for Single DocType
-			})
-			payment_gateway.insert(ignore_permissions=True)
+				"gateway_settings": None,
+				"gateway_controller": None,
+			}).insert(ignore_permissions=True)
 		else:
-			# Ensure existing record doesn't have invalid gateway_settings
-			existing = frappe.get_doc("Payment Gateway", gateway_name)
-			if existing.gateway_settings or existing.gateway_controller:
-				existing.gateway_settings = None
-				existing.gateway_controller = None
-				existing.save(ignore_permissions=True)
+			# Use direct SQL to avoid validation errors with Dynamic Link
+			frappe.db.sql(
+				"""
+				UPDATE `tabPayment Gateway`
+				SET gateway_settings = NULL, gateway_controller = NULL
+				WHERE gateway = %s AND (gateway_settings IS NOT NULL OR gateway_controller IS NOT NULL)
+				""",
+				gateway_name,
+			)
 
 	def validate_transaction_currency(self, currency: str) -> None:
 		"""

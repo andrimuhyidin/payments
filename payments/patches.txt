@@ -1,0 +1,2 @@
+[pre_model_sync]
+payments.patches.v0_0.fix_single_doctype_payment_gateways
