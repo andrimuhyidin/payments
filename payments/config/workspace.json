@@ -1,73 +1,6 @@
 {
  "charts": [],
- "content": [
-  {
-   "label": "Payment Gateway",
-   "link_to": "Payment Gateway",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Stripe Settings",
-   "link_to": "Stripe Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Razorpay Settings",
-   "link_to": "Razorpay Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "PayPal Settings",
-   "link_to": "PayPal Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Paytm Settings",
-   "link_to": "Paytm Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Braintree Settings",
-   "link_to": "Braintree Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "GoCardless Settings",
-   "link_to": "GoCardless Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Midtrans Settings",
-   "link_to": "Midtrans Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Xendit Settings",
-   "link_to": "Xendit Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Paymob Settings",
-   "link_to": "Paymob Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  },
-  {
-   "label": "Mpesa Settings",
-   "link_to": "Mpesa Settings",
-   "link_type": "DocType",
-   "type": "Link"
-  }
- ],
+ "content": "[]",
  "creation": "2025-01-27 00:00:00.000000",
  "custom_blocks": [],
  "docstatus": 0,
@@ -78,7 +11,74 @@
  "idx": 0,
  "is_hidden": 0,
  "label": "Payments",
- "links": [],
+ "links": [
+  {
+   "type": "Link",
+   "label": "Payment Gateway",
+   "link_type": "DocType",
+   "link_to": "Payment Gateway"
+  },
+  {
+   "type": "Link",
+   "label": "Stripe Settings",
+   "link_type": "DocType",
+   "link_to": "Stripe Settings"
+  },
+  {
+   "type": "Link",
+   "label": "Razorpay Settings",
+   "link_type": "DocType",
+   "link_to": "Razorpay Settings"
+  },
+  {
+   "type": "Link",
+   "label": "PayPal Settings",
+   "link_type": "DocType",
+   "link_to": "PayPal Settings"
+  },
+  {
+   "type": "Link",
+   "label": "Paytm Settings",
+   "link_type": "DocType",
+   "link_to": "Paytm Settings"
+  },
+  {
+   "type": "Link",
+   "label": "Braintree Settings",
+   "link_type": "DocType",
+   "link_to": "Braintree Settings"
+  },
+  {
+   "type": "Link",
+   "label": "GoCardless Settings",
+   "link_type": "DocType",
+   "link_to": "GoCardless Settings"
+  },
+  {
+   "type": "Link",
+   "label": "Midtrans Settings",
+   "link_type": "DocType",
+   "link_to": "Midtrans Settings"
+  },
+  {
+   "type": "Link",
+   "label": "Xendit Settings",
+   "link_type": "DocType",
+   "link_to": "Xendit Settings"
+  },
+  {
+   "type": "Link",
+   "label": "Paymob Settings",
+   "link_type": "DocType",
+   "link_to": "Paymob Settings"
+  },
+  {
+   "type": "Link",
+   "label": "Mpesa Settings",
+   "link_type": "DocType",
+   "link_to": "Mpesa Settings"
+  }
+ ],
  "modified": "2025-01-27 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Payments",

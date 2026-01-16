@@ -27,8 +27,17 @@ def execute():
 	with open(workspace_path, "r") as f:
 		workspace_data = json.load(f)
 	
-	# Extract child table data (content is a child table, not JSON field)
-	content_items = workspace_data.pop("content", [])
+	# content is a Long Text field that stores JSON string (default: "[]")
+	# Ensure content is a JSON string, not a list
+	if "content" in workspace_data:
+		if isinstance(workspace_data["content"], list):
+			workspace_data["content"] = json.dumps(workspace_data["content"])
+		elif not isinstance(workspace_data["content"], str):
+			workspace_data["content"] = "[]"
+	else:
+		workspace_data["content"] = "[]"
+	
+	# Extract child table data (these are Table fieldtypes)
 	charts = workspace_data.pop("charts", [])
 	links = workspace_data.pop("links", [])
 	shortcuts = workspace_data.pop("shortcuts", [])
@@ -39,10 +48,7 @@ def execute():
 	# Create workspace document (without child tables first)
 	workspace = frappe.get_doc(workspace_data)
 	
-	# Add child table items
-	for item in content_items:
-		workspace.append("content", item)
-	
+	# Add child table items using append() method
 	for item in charts:
 		workspace.append("charts", item)
 	
