@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 0,
+ "autoname": "field:gateway_name",
  "creation": "2024-01-01 00:00:00.000000",
  "doctype": "DocType",
  "document_type": "System",

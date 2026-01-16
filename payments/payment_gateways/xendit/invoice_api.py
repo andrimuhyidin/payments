@@ -130,13 +130,13 @@ class XenditInvoiceAPI:
 		Returns:
 		    dict containing invoice details
 		"""
+		from frappe.integrations.utils import make_get_request
+
 		url = f"{self.invoice_url}/{invoice_id}"
 
 		try:
-			import requests
-
-			response = requests.get(url, headers=self._get_headers(), timeout=30)
-			return response.json()
+			response = make_get_request(url, headers=self._get_headers())
+			return response
 		except Exception as e:
 			frappe.log_error(
 				message=frappe.get_traceback(),

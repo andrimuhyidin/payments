@@ -31,37 +31,9 @@ class MidtransSettings(Document):
 	supported_currencies = SUPPORTED_CURRENCIES
 
 	def validate(self):
-		"""Validate settings and create payment gateway record."""
-		self.setup_payment_gateway()
-
-	def setup_payment_gateway(self):
-		"""
-		Create or update Payment Gateway record for Midtrans.
-
-		For Single DocType like Midtrans Settings, we must NOT set gateway_settings
-		and gateway_controller fields, as Single DocTypes are not valid for Dynamic Links.
-		The system will fallback to using "{gateway_name} Settings" pattern.
-		"""
-		gateway_name = "Midtrans"
-
-		if not frappe.db.exists("Payment Gateway", gateway_name):
-			# Create new record without gateway_settings
-			frappe.get_doc({
-				"doctype": "Payment Gateway",
-				"gateway": gateway_name,
-				"gateway_settings": None,
-				"gateway_controller": None,
-			}).insert(ignore_permissions=True)
-		else:
-			# Use direct SQL to avoid validation errors with Dynamic Link
-			frappe.db.sql(
-				"""
-				UPDATE `tabPayment Gateway`
-				SET gateway_settings = NULL, gateway_controller = NULL
-				WHERE gateway = %s AND (gateway_settings IS NOT NULL OR gateway_controller IS NOT NULL)
-				""",
-				gateway_name,
-			)
+		"""Validate settings before saving."""
+		if not self.gateway_name:
+			self.gateway_name = "Midtrans"
 
 	def validate_transaction_currency(self, currency: str) -> None:
 		"""

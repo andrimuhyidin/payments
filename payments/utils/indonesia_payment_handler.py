@@ -78,6 +78,10 @@ def midtrans_callback(**kwargs):
 		if not integration_request_doc:
 			frappe.throw(_("No Integration Request found for order: {0}").format(order_id))
 
+		# Idempotency check: Skip if already processed
+		if integration_request_doc.status == "Completed":
+			return {"status": "Already Processed", "message": "This payment has already been processed"}
+
 		integration_request_dict = frappe.parse_json(integration_request_doc.data)
 
 		# Update with Midtrans response data
@@ -185,6 +189,10 @@ def xendit_callback(**kwargs):
 
 		if not integration_request_doc:
 			frappe.throw(_("No Integration Request found for external_id: {0}").format(external_id))
+
+		# Idempotency check: Skip if already processed
+		if integration_request_doc.status == "Completed":
+			return {"status": "Already Processed", "message": "This payment has already been processed"}
 
 		integration_request_dict = frappe.parse_json(integration_request_doc.data)
 

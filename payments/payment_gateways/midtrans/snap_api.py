@@ -119,6 +119,8 @@ class MidtransSnapAPI:
 		Returns:
 		    dict containing transaction status
 		"""
+		from frappe.integrations.utils import make_get_request
+
 		from payments.payment_gateways.midtrans.constants import (
 			MIDTRANS_PRODUCTION_API_URL,
 			MIDTRANS_SANDBOX_API_URL,
@@ -128,10 +130,8 @@ class MidtransSnapAPI:
 		url = f"{api_url}/{order_id}/status"
 
 		try:
-			import requests
-
-			response = requests.get(url, headers=self._get_headers(), timeout=30)
-			return response.json()
+			response = make_get_request(url, headers=self._get_headers())
+			return response
 		except Exception as e:
 			frappe.log_error(
 				message=frappe.get_traceback(),
