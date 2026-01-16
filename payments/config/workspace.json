@@ -19,6 +19,12 @@
    "link_to": "Payment Gateway"
   },
   {
+   "type": "Card Break",
+   "label": "Payment Gateway Settings",
+   "icon": "settings",
+   "description": "Configure and manage payment gateway integrations"
+  },
+  {
    "type": "Link",
    "label": "Stripe Settings",
    "link_type": "DocType",
