@@ -13,12 +13,8 @@ def import_workspace():
 	"""Import Payments workspace from JSON file."""
 	workspace_name = "Payments"
 	
-	# Check if workspace already exists
-	if frappe.db.exists("Workspace", workspace_name):
-		print(f"Workspace {workspace_name} already exists")
-		workspace = frappe.get_doc("Workspace", workspace_name)
-		print(f"Workspace details: {workspace.name}, Label: {workspace.label}")
-		return workspace
+	# Check if workspace already exists (will update if exists)
+	workspace_exists = frappe.db.exists("Workspace", workspace_name)
 	
 	# Get workspace JSON file path
 	app_path = frappe.get_app_path("payments")
@@ -50,8 +46,28 @@ def import_workspace():
 	number_cards = workspace_data.pop("number_cards", [])
 	custom_blocks = workspace_data.pop("custom_blocks", [])
 	
-	# Create workspace document (without child tables first)
-	workspace = frappe.get_doc(workspace_data)
+	if workspace_exists:
+		# Update existing workspace
+		workspace = frappe.get_doc("Workspace", workspace_name)
+		
+		# Update main fields (excluding child tables)
+		for key, value in workspace_data.items():
+			if key not in ["doctype", "name"]:
+				setattr(workspace, key, value)
+		
+		# Clear existing child tables
+		workspace.set("charts", [])
+		workspace.set("links", [])
+		workspace.set("shortcuts", [])
+		workspace.set("quick_lists", [])
+		workspace.set("number_cards", [])
+		workspace.set("custom_blocks", [])
+		
+		action = "updated"
+	else:
+		# Create new workspace
+		workspace = frappe.get_doc(workspace_data)
+		action = "imported"
 	
 	# Add child table items using append() method
 	for item in charts:
@@ -72,11 +88,14 @@ def import_workspace():
 	for item in custom_blocks:
 		workspace.append("custom_blocks", item)
 	
-	workspace.insert(ignore_permissions=True)
+	if workspace_exists:
+		workspace.save(ignore_permissions=True)
+	else:
+		workspace.insert(ignore_permissions=True)
 	
 	frappe.db.commit()
 	
-	print(f"✓ Successfully imported workspace: {workspace_name}")
+	print(f"✓ Successfully {action} workspace: {workspace_name}")
 	print(f"  Label: {workspace.label}")
 	print(f"  Module: {workspace.module}")
 	print(f"  Links: {len(workspace.links)}")

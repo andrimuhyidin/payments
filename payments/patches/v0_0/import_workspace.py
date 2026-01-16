@@ -6,14 +6,9 @@ import frappe
 
 def execute():
 	"""
-	Import Payments workspace from JSON file.
+	Import or update Payments workspace from JSON file.
 	"""
 	workspace_name = "Payments"
-	
-	# Check if workspace already exists
-	if frappe.db.exists("Workspace", workspace_name):
-		frappe.logger().info(f"Workspace {workspace_name} already exists, skipping import")
-		return
 	
 	# Get workspace JSON file path
 	app_path = frappe.get_app_path("payments")
@@ -23,7 +18,7 @@ def execute():
 		frappe.logger().error(f"Workspace file not found at {workspace_path}")
 		return
 	
-	# Read and import workspace
+	# Read workspace data from JSON file
 	with open(workspace_path, "r") as f:
 		workspace_data = json.load(f)
 	
@@ -45,29 +40,69 @@ def execute():
 	number_cards = workspace_data.pop("number_cards", [])
 	custom_blocks = workspace_data.pop("custom_blocks", [])
 	
-	# Create workspace document (without child tables first)
-	workspace = frappe.get_doc(workspace_data)
-	
-	# Add child table items using append() method
-	for item in charts:
-		workspace.append("charts", item)
-	
-	for item in links:
-		workspace.append("links", item)
-	
-	for item in shortcuts:
-		workspace.append("shortcuts", item)
-	
-	for item in quick_lists:
-		workspace.append("quick_lists", item)
-	
-	for item in number_cards:
-		workspace.append("number_cards", item)
-	
-	for item in custom_blocks:
-		workspace.append("custom_blocks", item)
-	
-	workspace.insert(ignore_permissions=True)
+	# Check if workspace already exists
+	if frappe.db.exists("Workspace", workspace_name):
+		# Update existing workspace
+		workspace = frappe.get_doc("Workspace", workspace_name)
+		
+		# Update main fields (excluding child tables)
+		for key, value in workspace_data.items():
+			if key not in ["doctype", "name"]:
+				setattr(workspace, key, value)
+		
+		# Clear existing child tables
+		workspace.set("charts", [])
+		workspace.set("links", [])
+		workspace.set("shortcuts", [])
+		workspace.set("quick_lists", [])
+		workspace.set("number_cards", [])
+		workspace.set("custom_blocks", [])
+		
+		# Add new child table items
+		for item in charts:
+			workspace.append("charts", item)
+		
+		for item in links:
+			workspace.append("links", item)
+		
+		for item in shortcuts:
+			workspace.append("shortcuts", item)
+		
+		for item in quick_lists:
+			workspace.append("quick_lists", item)
+		
+		for item in number_cards:
+			workspace.append("number_cards", item)
+		
+		for item in custom_blocks:
+			workspace.append("custom_blocks", item)
+		
+		workspace.save(ignore_permissions=True)
+		frappe.logger().info(f"Successfully updated workspace: {workspace_name}")
+	else:
+		# Create new workspace
+		workspace = frappe.get_doc(workspace_data)
+		
+		# Add child table items using append() method
+		for item in charts:
+			workspace.append("charts", item)
+		
+		for item in links:
+			workspace.append("links", item)
+		
+		for item in shortcuts:
+			workspace.append("shortcuts", item)
+		
+		for item in quick_lists:
+			workspace.append("quick_lists", item)
+		
+		for item in number_cards:
+			workspace.append("number_cards", item)
+		
+		for item in custom_blocks:
+			workspace.append("custom_blocks", item)
+		
+		workspace.insert(ignore_permissions=True)
+		frappe.logger().info(f"Successfully imported workspace: {workspace_name}")
 	
 	frappe.db.commit()
-	frappe.logger().info(f"Successfully imported workspace: {workspace_name}")
