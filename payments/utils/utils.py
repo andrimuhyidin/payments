@@ -243,11 +243,22 @@ def fix_payment_gateway_records():
 
 	for gateway_name in single_doctype_gateways:
 		if frappe.db.exists("Payment Gateway", gateway_name):
-			gateway = frappe.get_doc("Payment Gateway", gateway_name)
-			if gateway.gateway_settings or gateway.gateway_controller:
-				gateway.gateway_settings = None
-				gateway.gateway_controller = None
-				gateway.save(ignore_permissions=True)
+			# Check if gateway_settings or gateway_controller is set
+			gateway_settings = frappe.db.get_value("Payment Gateway", gateway_name, "gateway_settings")
+			gateway_controller = frappe.db.get_value("Payment Gateway", gateway_name, "gateway_controller")
+			
+			if gateway_settings or gateway_controller:
+				# Use direct SQL to avoid validation errors with Dynamic Link
+				# This is necessary because Single DocTypes cannot be used as Dynamic Link targets
+				frappe.db.sql(
+					"""
+					UPDATE `tabPayment Gateway`
+					SET gateway_settings = NULL, gateway_controller = NULL
+					WHERE name = %s
+					""",
+					gateway_name,
+				)
+				frappe.db.commit()
 				click.secho(f"* Fixed Payment Gateway record for {gateway_name}")
 
 	frappe.db.commit()
