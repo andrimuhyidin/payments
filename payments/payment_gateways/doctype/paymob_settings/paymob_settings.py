@@ -26,6 +26,7 @@ class PaymobSettings(Document):
 		from frappe.types import DF
 
 		api_key: DF.Password
+		gateway_name: DF.Data | None
 		hmac: DF.Password
 		iframe: DF.Data
 		payment_integration: DF.Int
@@ -33,6 +34,11 @@ class PaymobSettings(Document):
 		secret_key: DF.Password
 		token: DF.Password | None
 	# end: auto-generated types
+
+	def validate(self):
+		"""Set default gateway_name if not set."""
+		if not self.gateway_name:
+			self.gateway_name = "Paymob"
 
 	@frappe.whitelist()
 	def refresh_access_token(self):

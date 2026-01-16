@@ -218,6 +218,10 @@ class RazorpaySettings(Document):
 			self.client = razorpay.Client(auth=(self.api_key, secret))
 
 	def validate(self):
+		"""Set default gateway_name if not set."""
+		if not self.gateway_name:
+			self.gateway_name = "Razorpay"
+		
 		create_payment_gateway("Razorpay")
 		call_hook_method("payment_gateway_enabled", gateway="Razorpay")
 		if not self.flags.ignore_mandatory:

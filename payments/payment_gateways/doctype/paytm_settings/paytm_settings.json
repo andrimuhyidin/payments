@@ -1,10 +1,12 @@
 {
  "actions": [],
+ "autoname": "field:gateway_name",
  "creation": "2020-04-02 00:11:22.846697",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "gateway_name",
   "merchant_id",
   "merchant_key",
   "staging",
@@ -13,6 +15,16 @@
   "website"
  ],
  "fields": [
+  {
+   "default": "Paytm",
+   "fieldname": "gateway_name",
+   "fieldtype": "Data",
+   "label": "Gateway Name",
+   "read_only": 1,
+   "reqd": 1,
+   "show_days": 1,
+   "show_seconds": 1
+  },
   {
    "fieldname": "merchant_id",
    "fieldtype": "Data",
@@ -79,6 +91,16 @@
    "print": 1,
    "read": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts Manager",
    "share": 1,
    "write": 1
   }

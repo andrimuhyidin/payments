@@ -4,7 +4,9 @@
  "creation": "2025-10-22 13:58:02.482023",
  "doctype": "DocType",
  "engine": "InnoDB",
+ "autoname": "field:gateway_name",
  "field_order": [
+  "gateway_name",
   "credentials_section",
   "api_key",
   "public_key",
@@ -20,6 +22,14 @@
   "redirect_to"
  ],
  "fields": [
+  {
+   "default": "Paymob",
+   "fieldname": "gateway_name",
+   "fieldtype": "Data",
+   "label": "Gateway Name",
+   "read_only": 1,
+   "reqd": 1
+  },
   {
    "fieldname": "credentials_section",
    "fieldtype": "Section Break",

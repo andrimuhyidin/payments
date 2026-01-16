@@ -27,6 +27,10 @@ class PaytmSettings(Document):
 	supported_currencies = ("INR",)
 
 	def validate(self):
+		"""Set default gateway_name if not set."""
+		if not self.gateway_name:
+			self.gateway_name = "Paytm"
+		
 		create_payment_gateway("Paytm")
 		call_hook_method("payment_gateway_enabled", gateway="Paytm")
 

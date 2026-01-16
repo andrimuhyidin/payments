@@ -6,6 +6,8 @@ app_publisher = "Frappe Technologies"
 app_description = "Payments app for frappe"
 app_email = "hello@frappe.io"
 app_license = "MIT"
+app_icon = "octicon octicon-credit-card"
+desk_page = "Payments"
 
 # Includes in <head>
 # ------------------

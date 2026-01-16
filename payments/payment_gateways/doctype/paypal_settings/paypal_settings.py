@@ -115,6 +115,10 @@ class PayPalSettings(Document):
 		self.use_sandbox = cint(frappe._dict(data).use_sandbox) or 0
 
 	def validate(self):
+		"""Set default gateway_name if not set."""
+		if not self.gateway_name:
+			self.gateway_name = "PayPal"
+		
 		create_payment_gateway("PayPal")
 		call_hook_method("payment_gateway_enabled", gateway="PayPal")
 		if not self.flags.ignore_mandatory:
