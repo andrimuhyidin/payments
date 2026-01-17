@@ -250,14 +250,14 @@ def fix_payment_gateway_records():
 			if gateway_settings or gateway_controller:
 				# Use direct SQL to avoid validation errors with Dynamic Link
 				# This is necessary because Single DocTypes cannot be used as Dynamic Link targets
-				frappe.db.sql(
-					"""
-					UPDATE `tabPayment Gateway`
-					SET gateway_settings = NULL, gateway_controller = NULL
-					WHERE name = %s
-					""",
-					gateway_name,
-				)
+				# Refactored to QueryBuilder
+				pg = frappe.qb.DocType("Payment Gateway")
+				(
+					frappe.qb.update(pg)
+					.set(pg.gateway_settings, None)
+					.set(pg.gateway_controller, None)
+					.where(pg.name == gateway_name)
+				).run()
 				frappe.db.commit()
 				click.secho(f"* Fixed Payment Gateway record for {gateway_name}")
 
