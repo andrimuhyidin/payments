@@ -9,6 +9,9 @@ app_license = "MIT"
 app_icon = "octicon octicon-credit-card"
 desk_page = "Payments"
 
+# Optional dependencies (checked at runtime with erpnext_app_import_guard)
+optional_apps = ["erpnext"]  # For Payment Entry and accounting integration
+
 # Each item in the list will be shown as an app in the apps page
 add_to_apps_screen = [
 	{
