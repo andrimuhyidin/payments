@@ -9,7 +9,10 @@ Handles refund processing orchestration and gateway handler selection.
 
 import frappe
 from frappe import _
-from typing import Optional, Type
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from typing import Optional, Type
 from payments.refund.base import RefundHandler, GenericRefundHandler
 
 
