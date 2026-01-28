@@ -4,7 +4,7 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.utils import nowdatetime, flt
+from frappe.utils import now_datetime, flt
 import json
 
 
@@ -158,6 +158,6 @@ class RefundRequest(Document):
 			self.error_message = error_message
 		
 		if status == "Completed":
-			self.processed_at = nowdatetime()
+			self.processed_at = now_datetime()
 		
 		self.save(ignore_permissions=True)
