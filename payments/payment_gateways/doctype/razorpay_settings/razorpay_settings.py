@@ -557,8 +557,16 @@ def capture_payment(is_sandbox=False, sanbox_response=None):
 			frappe.log_error(doc.error, f"{doc.name} Failed")
 
 
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist()
 def get_api_key():
+	"""Get Razorpay API key for authenticated users only.
+	
+	Security: Removed allow_guest=True to prevent API key exposure
+	to unauthenticated users.
+	"""
+	if frappe.session.user == "Guest":
+		frappe.throw(_("Authentication required to access API key"))
+	
 	controller = frappe.get_doc("Razorpay Settings")
 	return controller.api_key
 

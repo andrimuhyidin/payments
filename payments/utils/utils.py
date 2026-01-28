@@ -28,13 +28,56 @@ def get_payment_gateway_controller(payment_gateway):
 
 @frappe.whitelist(allow_guest=True, xss_safe=True)
 def get_checkout_url(**kwargs):
+	"""Get checkout URL from payment gateway settings.
+	
+	Args:
+		**kwargs: Payment parameters including payment_gateway name
+		
+	Returns:
+		Payment URL or error page
+	"""
+	payment_gateway = kwargs.get("payment_gateway")
+	
+	if not payment_gateway:
+		frappe.log_error("Payment gateway not specified in checkout request", "Payment Gateway Error")
+		frappe.respond_as_web_page(
+			_("Invalid Request"),
+			_("Payment gateway was not specified in the request."),
+			indicator_color="red",
+			http_status_code=400,
+		)
+		return
+	
 	try:
-		if kwargs.get("payment_gateway"):
-			doc = frappe.get_doc("{} Settings".format(kwargs.get("payment_gateway")))
-			return doc.get_payment_url(**kwargs)
-		else:
-			raise Exception
-	except Exception:
+		doc = frappe.get_doc(f"{payment_gateway} Settings")
+		return doc.get_payment_url(**kwargs)
+	except frappe.DoesNotExistError:
+		frappe.log_error(
+			f"Payment gateway settings not found: {payment_gateway}",
+			"Payment Gateway Error"
+		)
+		frappe.respond_as_web_page(
+			_("Payment Gateway Not Configured"),
+			_("The payment gateway settings have not been configured. Please contact the administrator."),
+			indicator_color="red",
+			http_status_code=404,
+		)
+	except AttributeError as e:
+		frappe.log_error(
+			f"Payment gateway missing get_payment_url method: {payment_gateway}\n{str(e)}",
+			"Payment Gateway Error"
+		)
+		frappe.respond_as_web_page(
+			_("Payment Gateway Error"),
+			_("The payment gateway is not properly configured. Please contact the administrator."),
+			indicator_color="red",
+			http_status_code=500,
+		)
+	except Exception as e:
+		frappe.log_error(
+			f"Checkout URL error for {payment_gateway}: {str(e)}",
+			"Payment Gateway Error"
+		)
 		frappe.respond_as_web_page(
 			_("Something went wrong"),
 			_(
