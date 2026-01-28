@@ -1,34 +1,85 @@
-{% extends "templates/web.html" %}
+{% extends "templates/web.html" %} {% block title %}{{ _("Payment Successful")
+}}{% endblock %} {%- block page_content -%}
+<div class="container my-5 py-5 text-center">
+  <div
+    class="payment-success-card mx-auto p-5 shadow-lg rounded"
+    style="
+      max-width: 500px;
+      background: #fff;
+      border-top: 5px solid var(--green);
+    "
+  >
+    <div class="mb-4">
+      <div class="display-1 text-success">
+        <i class="fa fa-check-circle"></i>
+      </div>
+    </div>
+    <h2 class="mb-3">{{ _("Thank You!") }}</h2>
+    <p class="lead text-muted mb-4">
+      {{ payment_message or _("Your payment has been successfully processed and
+      your order is confirmed.") }}
+    </p>
 
-{% block title %}{{ _("Payment Success") }}{% endblock %}
+    <div class="order-details p-3 mb-4 bg-light rounded text-left">
+      <div class="d-flex justify-content-between mb-2">
+        <span>{{ _("Reference") }}:</span>
+        <strong
+          >{{ frappe.form_dict.order_id or frappe.form_dict.name or _("N/A")
+          }}</strong
+        >
+      </div>
+      <div class="d-flex justify-content-between">
+        <span>{{ _("Status") }}:</span>
+        <span class="badge badge-success">{{ _("Paid") }}</span>
+      </div>
+    </div>
 
-{%- block page_content -%}
-<div class='page-card'>
-	<div class='page-card-head'>
-		<span class='indicator green'>
-			{{ _("Success") }}</span>
-	</div>
-	<p>{{ payment_message or _("Your payment was successfully accepted") }}</p>
-	{% if not payment_message %}
-		<div>
-			<a
-			   href='{{ frappe.form_dict.redirect_to or "/" }}'
-			   class='btn btn-primary btn-sm'>
-				{{ _("Continue") }}
-			</a>
-		</div>
-	{% endif %}
+    <a
+      href="{{ frappe.form_dict.redirect_to or '/' }}"
+      class="btn btn-primary btn-lg btn-block shadow"
+    >
+      {{ _("Continue Shopping") }}
+    </a>
+
+    <p class="mt-4 text-muted small">{{ _("Redirecting in 5 seconds...") }}</p>
+  </div>
 </div>
+
 <style>
-{% include "templates/styles/card_style.css" %}
+  .payment-success-card {
+    transition: transform 0.3s ease;
+  }
+  .payment-success-card:hover {
+    transform: translateY(-5px);
+  }
+  .display-1 i {
+    animation: bounceIn 0.8s ease;
+  }
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 </style>
+
 <script>
-	frappe.ready(function() {
-		if('{{ frappe.form_dict.redirect_to or "" }}'){
-			setTimeout(function(){
-				window.location.href = '{{ frappe.form_dict.redirect_to }}';
-			}, 4000);
-		}
-	})
+  frappe.ready(function () {
+    if ('{{ frappe.form_dict.redirect_to or "" }}') {
+      setTimeout(function () {
+        window.location.href = "{{ frappe.form_dict.redirect_to }}";
+      }, 5000);
+    }
+  });
 </script>
 {% endblock %}
