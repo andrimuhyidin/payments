@@ -17,6 +17,13 @@ from payments.payment_gateways.paymob.response_codes import SUCCESS
 
 
 class PaymobSettings(Document):
+	"""
+	Paymob Payment Gateway Settings for Middle East and Africa payments.
+	
+	Integrates with Paymob Accept API for handling credit card payments,
+	mobile wallets, and other payment methods in Egypt and MENA region.
+	"""
+
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 

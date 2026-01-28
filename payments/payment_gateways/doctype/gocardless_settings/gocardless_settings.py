@@ -13,6 +13,13 @@ from frappe.utils import call_hook_method, cint, flt, get_url
 
 
 class GoCardlessSettings(Document):
+	"""
+	GoCardless Payment Gateway Settings for bank-to-bank payments.
+	
+	Integrates with GoCardless API for handling direct debit payments
+	and recurring billing across Europe, UK, Australia, and North America.
+	"""
+
 	supported_currencies = ("EUR", "DKK", "GBP", "SEK", "AUD", "NZD", "CAD", "USD")
 
 	def validate(self):

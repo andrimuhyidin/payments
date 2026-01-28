@@ -9,6 +9,16 @@ app_license = "MIT"
 app_icon = "octicon octicon-credit-card"
 desk_page = "Payments"
 
+# Each item in the list will be shown as an app in the apps page
+add_to_apps_screen = [
+	{
+		"name": "payments",
+		"logo": "/assets/payments/images/logo.png",
+		"title": "Payments",
+		"route": "/app/payments",
+	}
+]
+
 # Includes in <head>
 # ------------------
 

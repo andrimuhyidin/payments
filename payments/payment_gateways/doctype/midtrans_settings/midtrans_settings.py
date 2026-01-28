@@ -11,6 +11,14 @@ from payments.payment_gateways.midtrans.snap_api import MidtransSnapAPI
 
 
 class MidtransSettings(Document):
+	"""
+	Midtrans Payment Gateway Settings for Indonesian payment processing.
+	
+	Integrates with Midtrans Snap API for handling payments via various
+	Indonesian payment methods including credit cards, bank transfers,
+	e-wallets, and convenience stores.
+	"""
+
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 

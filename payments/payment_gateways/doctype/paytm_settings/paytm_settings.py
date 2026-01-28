@@ -24,6 +24,13 @@ from payments.utils import create_payment_gateway
 
 
 class PaytmSettings(Document):
+	"""
+	Paytm Payment Gateway Settings for Indian payment processing.
+	
+	Integrates with Paytm API for handling payments via UPI, wallets,
+	net banking, and cards in India. Supports only INR currency.
+	"""
+
 	supported_currencies = ("INR",)
 
 	def validate(self):

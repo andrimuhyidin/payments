@@ -7,6 +7,13 @@ from frappe.model.document import Document
 
 
 class PaymentGateway(Document):
+	"""
+	Payment Gateway configuration for integrating payment providers.
+	
+	Manages the connection between payment methods and their settings,
+	allowing dynamic linking to various payment gateway configurations.
+	"""
+
 	def validate(self):
 		"""Validate that Single DocTypes are not used as gateway_settings."""
 		if self.gateway_settings:

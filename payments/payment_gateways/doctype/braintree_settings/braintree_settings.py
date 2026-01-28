@@ -14,6 +14,13 @@ from payments.utils import create_payment_gateway
 
 
 class BraintreeSettings(Document):
+	"""
+	Braintree Payment Gateway Settings (PayPal subsidiary).
+	
+	Integrates with Braintree API for handling credit card payments,
+	PayPal, Venmo, and other payment methods globally.
+	"""
+
 	supported_currencies = (
 		"AED",
 		"AMD",

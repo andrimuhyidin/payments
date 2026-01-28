@@ -11,6 +11,14 @@ from payments.payment_gateways.xendit.invoice_api import XenditInvoiceAPI
 
 
 class XenditSettings(Document):
+	"""
+	Xendit Payment Gateway Settings for Indonesian and Southeast Asian payments.
+	
+	Integrates with Xendit Invoice API for handling payments via various
+	methods including credit cards, bank transfers, e-wallets, and
+	retail outlets across Indonesia and Southeast Asia.
+	"""
+
 	# begin: auto-generated types
 	# This code is auto-generated. Do not modify anything in this block.
 

@@ -18,6 +18,13 @@ from payments.utils import erpnext_app_import_guard
 
 
 class MpesaSettings(Document):
+	"""
+	M-Pesa Payment Gateway Settings for African mobile payments.
+	
+	Integrates with Safaricom M-Pesa API for handling mobile money
+	payments in Kenya. Supports only KES currency.
+	"""
+
 	supported_currencies = ("KES",)
 
 	def validate_transaction_currency(self, currency):

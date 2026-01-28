@@ -32,6 +32,13 @@ currency_wise_minimum_charge_amount = {
 
 
 class StripeSettings(Document):
+	"""
+	Stripe Payment Gateway Settings for global payment processing.
+	
+	Integrates with Stripe API for handling credit card payments,
+	subscriptions, and various payment methods across 135+ currencies.
+	"""
+
 	supported_currencies = (
 		"AED",
 		"ALL",
