@@ -112,11 +112,13 @@ class XenditQRCodeAPI:
 			return response
 
 		except Exception as e:
+			# M5: do NOT log full traceback — local frames hold the Basic-auth
+			# header (secret_key). Log only the exception type.
 			frappe.log_error(
-				message=frappe.get_traceback(),
+				message=f"Xendit QR create failed: {type(e).__name__}",
 				title="Xendit QR Codes API Error",
 			)
-			frappe.throw(_("Failed to create Xendit QR code: {0}").format(str(e)))
+			frappe.throw(_("Failed to create Xendit QR code: {0}").format(type(e).__name__))
 
 	def get_qr_code(self, qr_id: str) -> dict:
 		"""
@@ -132,8 +134,9 @@ class XenditQRCodeAPI:
 		try:
 			return make_get_request(url, headers=self._get_headers())
 		except Exception as e:
+			# M5: avoid logging full traceback (may capture the auth header secret).
 			frappe.log_error(
-				message=frappe.get_traceback(),
+				message=f"Xendit QR get failed: {type(e).__name__}",
 				title="Xendit Get QR Code Error",
 			)
-			frappe.throw(_("Failed to get QR code: {0}").format(str(e)))
+			frappe.throw(_("Failed to get QR code: {0}").format(type(e).__name__))
