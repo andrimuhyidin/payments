@@ -70,6 +70,7 @@ class XenditQRCodeAPI:
 		currency: str = "IDR",
 		qr_type: str = "DYNAMIC",
 		expires_at: str | None = None,
+		callback_url: str | None = None,
 	) -> dict:
 		"""
 		Create a dynamic QRIS charge and return its raw ``qr_string``.
@@ -80,6 +81,9 @@ class XenditQRCodeAPI:
 		    currency: Currency code (QRIS → "IDR").
 		    qr_type: "DYNAMIC" (amount-bound, single use) or "STATIC".
 		    expires_at: optional ISO-8601 expiry timestamp.
+		    callback_url: optional per-charge webhook URL. Xendit POSTs the
+		        ``qr.payment`` event here on settlement (overrides the
+		        account-level QR callback configured in the dashboard).
 
 		Returns:
 		    dict with at least ``id``, ``qr_string``, ``status``, ``amount``,
@@ -93,6 +97,8 @@ class XenditQRCodeAPI:
 		}
 		if expires_at:
 			payload["expires_at"] = expires_at
+		if callback_url:
+			payload["callback_url"] = callback_url
 
 		try:
 			response = make_post_request(
